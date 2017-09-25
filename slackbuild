@@ -1,5 +1,6 @@
 #set -x
 cmd=`basename $0`
+src=/src/app
 while [ $# -gt 0 ];do
 	case $1 in
 		-s) subdir=$2;shift 2;;
@@ -11,11 +12,13 @@ done
 #	echo "Integrity check failed" >&2
 #	exit 1
 
-cd /src/app ||{ echo "$cmd: can't find /src/app"; exit 1 ;}
+cd $src ||{ echo "$cmd: can't find /src/app"; exit 1 ;}
 
+[ -d $subdir ] || { mkdir $subdir ;}
+cd $subdir
 [ -d $sbo ] || { mkdir $sbo ;}
 
-cd $sbo ||{ echo "$cmd: can't find /src/app/$sbo"; exit 1 ;}
+cd $sbo ||{ echo "$cmd: can't find /src/app/$subdir/$sbo"; exit 1 ;}
 
 osr=`awk </etc/os-release -F= '/VERSION_ID/{print $2}'`
 bundle=https://slackbuilds.org/slackbuilds/$osr/$subdir/$sbo.tar.gz
@@ -53,5 +56,5 @@ else
 	cd ..
 	exit 1 
 fi
-cd ..
+cd  $src
 	
