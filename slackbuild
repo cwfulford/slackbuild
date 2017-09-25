@@ -16,15 +16,23 @@ sudo chown fulford $app
 cd $app 
 . ./$app.info
 wget $DOWNLOAD
-pkg=`sudo ./$app.SlackBuild|awk '{print $3}'`
-[ $verbose ] && echo $pkg >&2
+echo "$cmd: Building $app"
+sudo ./$app.SlackBuild
+pkg=`ls /tmp/*tgz|grep $app`
 pkg_chk=`expr "$pkg" : '.*SBo.tgz'`
 [ $verbose ] && echo "pkg_chk = $pkg_chk" >&2
 if [ $pkg_chk -gt 7 ];then 
-	echo "sudo mv /tmp/$pkg ."
-	read
+	[ $verbos ] && echo "$cmd:moving /tmp/$pkg $PWD"
 	mv /tmp/$pkg .
-	sudo /sbin/installpkg $pkg
+	echo "$cmd: install $pkg now? [y/n]\c"
+	read ans
+	if [ $ans ~ "y" ]	
+		sudo /sbin/installpkg $pkg
+	else
+		cd ..
+		echo "$cmd: terminating">&2
+		exit	
+	fi
 else
 	echo "$cmd: Failed, package not created">&2
 	cd ..
