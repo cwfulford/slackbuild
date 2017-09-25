@@ -2,6 +2,7 @@ set -x
 cmd=`basename $0`
 while [ $# -gt 0 ];do
 	case $1 in
+		-s) subdir=$2;shift 2;;
 		-v) verbose=:;shift;;
 		 *) sbo=$1;shift ;;
 	esac
@@ -17,7 +18,6 @@ cd /src/app ||{ echo "$cmd: can't find /src/app"; exit 1 ;}
 cd $sbo ||{ echo "$cmd: can't find /src/app/$sbo"; exit 1 ;}
 
 osr=`awk </etc/os-release -F= '/VERSION_ID/{print $2}'`
-subdir=`echo $sbo|awk -F\- '{if(NF > 1)print $1}'`
 bundle=https://slackbuilds.org/slackbuilds/$osr/$subdir/$sbo.tar.gz
 echo $bundle
 read
