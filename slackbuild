@@ -9,7 +9,9 @@ done
 #gpg --verify $sbo.asc|grep -q "Good signature"||{
 #	echo "Integrity check failed" >&2
 #	exit 1
-
+cd /src/app ||{echo "$cmd: can't find /src/app"; exit 1}
+[ -d $sbo ] || {mkdir $sbo}
+cd $sbo ||{echo "$cmd: can't find /src/app/$sbo"; exit 1}
 osr=`awk </etc/os-release -F= '/VERSION_ID/{print $2}'`
 subdir=`echo $sbo|awk -F\- '{if(NF > 2)print $1}'`
 bundle=https://slackbuilds.org/slackbuilds/$osr/$subdir/$sbo.tar.gz
