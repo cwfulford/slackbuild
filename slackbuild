@@ -24,9 +24,9 @@ pkg_chk=`expr "$pkg" : '.*SBo.tgz'`
 if [ $pkg_chk -gt 7 ];then 
 	[ $verbose ] && echo "$cmd:moving /tmp/$pkg $PWD"
 	mv /tmp/$pkg .
-	echo "$cmd: install $pkg now? [y/n]\c"
+	echo -e "$cmd: install $pkg now? [y/n]\c"
 	read ans
-	if [ $ans ~ "y" ];then
+	if [ $ans == "y" ];then
 		sudo /sbin/installpkg $pkg
 	else
 		cd ..
