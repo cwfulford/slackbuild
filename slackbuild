@@ -10,15 +10,15 @@ done
 #	echo "Integrity check failed" >&2
 #	exit 1
 #}
-app=`basename $sbo .tar.gz`
-tar xvf $sbo
-sudo chown fulford $app 
-cd $app 
-. ./$app.info
+#app=`basename $sbo .tar.gz`
+tar xvf $sbo.tar.gz
+sudo chown fulford $sbo 
+cd $sbo 
+. ./$sbo.info
 wget $DOWNLOAD
-echo "$cmd: Building $app"
-sudo ./$app.SlackBuild
-pkg=`ls /tmp/*tgz|grep $app`
+echo "$cmd: Building $sbo"
+sudo ./$sbo.SlackBuild
+pkg=`ls /tmp/*tgz|grep $sbo`
 pkg_chk=`expr "$pkg" : '.*SBo.tgz'`
 [ $verbose ] && echo "pkg_chk = $pkg_chk" >&2
 if [ $pkg_chk -gt 7 ];then 
