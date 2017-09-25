@@ -12,7 +12,7 @@ done
 
 osr=`awk </etc/os-release -F= '/VERSION_ID/{print $2}'`
 subdir=`echo $sbo|awk -F\- '{if(NF > 2)print $1}'`
-bundle=https:/slackbuilds.org/slackbuilds/$osr/$subdir/$sbo.tar.gz
+bundle=https://slackbuilds.org/slackbuilds/$osr/$subdir/$sbo.tar.gz
 if wget $bundle ;then
 	wget $bundle.asc
 	tar xvf $sbo.tar.gz
