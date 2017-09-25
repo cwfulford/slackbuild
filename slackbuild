@@ -20,7 +20,6 @@ cd $sbo ||{ echo "$cmd: can't find /src/app/$sbo"; exit 1 ;}
 osr=`awk </etc/os-release -F= '/VERSION_ID/{print $2}'`
 bundle=https://slackbuilds.org/slackbuilds/$osr/$subdir/$sbo.tar.gz
 echo $bundle
-read
 if wget $bundle ;then
 	wget $bundle.asc
 	tar xvf $sbo.tar.gz
@@ -41,6 +40,7 @@ if [ $pkg_chk -gt 7 ];then
 	[ $verbose ] && echo "$cmd:moving /tmp/$pkg $PWD"
 	mv /tmp/$pkg .
 	echo -e "$cmd: install $pkg now? [y/n]\c"
+	read ans
 	if [ $ans == "y" ];then
 		sudo /sbin/installpkg $pkg
 	else
