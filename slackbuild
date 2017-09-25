@@ -9,8 +9,10 @@ done
 #gpg --verify $sbo.asc|grep -q "Good signature"||{
 #	echo "Integrity check failed" >&2
 #	exit 1
-#}
-#app=`basename $sbo .tar.gz`
+
+osr=`awk </etc/os-release -F= '/VERSION_ID/{print $2}'`
+subdir=`echo $sbo|awk -F\- '{if(NF > 2)print $1}'`
+wget https:/slackbuilds.org/slackbuilds/$osr/
 tar xvf $sbo.tar.gz
 sudo chown fulford $sbo 
 cd $sbo 
