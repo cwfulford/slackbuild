@@ -22,11 +22,11 @@ pkg=`ls /tmp/*tgz|grep $app`
 pkg_chk=`expr "$pkg" : '.*SBo.tgz'`
 [ $verbose ] && echo "pkg_chk = $pkg_chk" >&2
 if [ $pkg_chk -gt 7 ];then 
-	[ $verbos ] && echo "$cmd:moving /tmp/$pkg $PWD"
+	[ $verbose ] && echo "$cmd:moving /tmp/$pkg $PWD"
 	mv /tmp/$pkg .
 	echo "$cmd: install $pkg now? [y/n]\c"
 	read ans
-	if [ $ans ~ "y" ]	
+	if [ $ans ~ "y" ];then
 		sudo /sbin/installpkg $pkg
 	else
 		cd ..
